@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Documento>
+
+<h1 class="text-center">Notas</h1>
+
+<div class="text-center">
+    <a class="d-flex justify-content-center text-center"
+       style="width: 150px; height: 150px; background-color: lightsteelblue; font-size: 80px; text-decoration: none; color: black;"
+       asp-action="CriarDocumento">
+        +
+    </a>
+</div>
+
+<hr />
+
+<div class="row">
+    <div class="d-flex align-items-center justify-content-around w-100">
+        <h2 class="text-center mb-4">Notas Salvas</h2>
+
+        <form asp-controller="Home" asp-action="Index" method="post"
+              class="d-flex">
+            <input name="pesquisa" class="form-control mx-2" type="search" placeholder="Nome do documento" />
+            <input class="btn btn-secondary" type="submit" value="Pesquisar" />
+            <a asp-action="Index" class="btn btn-secondary mx-2">
+                <img src="/img/refresh_64px.png" style="width: 24px;"/>
+            </a>
+        </form>
+    </div>
+
+    @if(Model != null && Model.Any())
+    {
+        @foreach (var item in Model)
+        {
+            <div class="col-2 mt-3">
+                <span>
+                    Criação: @item.DataCriacao.ToString("dd/MM/yyyy HH:mm")
+                </span>
+                <div class="d-flex justify-content-center align-items-center"
+                     style="width: 150px; height: 150px; background-color: lightblue; font-size: 80px;">
+                    <a class="d-flex justify-content-center align-items-center"
+                       style="text-decoration: none; color: black;" asp-action="EditarDocumento" asp-route-id="@item.Id">
+                        <img src="/img/memo_96px.png" />
+                    </a>
+                </div>
+                <span style="font-weight: bold;">@item.Titulo</span>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="text-center mt-5">
+            <h3>Nenhum documento encontrado</h3>
+        </div>
+    }
+
+</div>
